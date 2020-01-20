@@ -6,6 +6,9 @@ const app = express();
 /** Connecting to DB */
 connectDB();
 
+/** Middlewares */
+app.use(express.json({ extended: false })); // For parsing application/json
+
 app.get("/", (req, res) => {
   res.send("API is running");
 });
