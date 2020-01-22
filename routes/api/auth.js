@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+const passport = require("passport");
 const { check, validationResult } = require("express-validator");
 
 const { jwtToken } = require("../../config/default");
@@ -35,52 +35,50 @@ router.post(
     check("email", "Must be a valid email").isEmail(),
     check("password", "Password is required").exists()
   ],
-  async (req, res) => {
+  (req, res, next) => {
     /** Ensures user input is valid */
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password } = req.body;
-
     try {
-      let user = await User.findOne({ email });
-
-      /** Check if user exists */
-      if (!user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Invalid Credentials" }] });
-      }
-
-      /** Comparing Password */
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Invalid Credentials" }] });
-      }
-
-      /** Add JSON Web Token */
-      const payload = {
-        user: {
-          id: user.id
+      /** Passport Authentication */
+      passport.authenticate("local", { session: false }, (error, user) => {
+        if (error || !user) {
+          return res.status(400).json({
+            errors: [{ msg: "Invalid Credentials" }]
+          });
         }
-      };
 
-      jwt.sign(
-        payload,
-        jwtToken,
-        { expiresIn: 60 * 60 * 1000 },
-        (error, token) => {
-          if (error) throw error;
-          res.json({ token });
-        }
-      );
+        req.login(user, { session: false }, error => {
+          if (error) {
+            return res.status(400).json({
+              errors: [{ msg: "Server Error" }]
+            });
+          }
+
+          /** Add JSON Web Token */
+          const payload = {
+            user: {
+              id: user.id
+            }
+          };
+
+          jwt.sign(
+            payload,
+            jwtToken,
+            { expiresIn: 60 * 60 * 1000 },
+            (error, token) => {
+              if (error) throw error;
+              res.json({ token });
+            }
+          );
+        });
+      })(req, res, next);
     } catch (error) {
       console.log(error.message);
-      res.status(500).send("server Error");
+      res.status(500).send("Server Error");
     }
   }
 );

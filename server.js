@@ -1,6 +1,9 @@
 const express = require("express");
 const connectDB = require("./config/db");
 
+const User = require("./models/User");
+require("./config/passport");
+
 const app = express();
 
 /** Connecting to DB */
