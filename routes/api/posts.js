@@ -92,22 +92,6 @@ router.get("/:post_id", auth, async (req, res) => {
 });
 
 /* 
-@route  GET api/posts
-@desc   Get all posts
-@access Private
-*/
-router.get("/", auth, async (req, res) => {
-  try {
-    const posts = await Post.find().sort({ date: -1 });
-
-    res.json(posts);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-/* 
 @route  DELETE api/posts/:post_id
 @desc   Delete post by ID
 @access Private
