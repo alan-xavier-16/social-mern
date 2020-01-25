@@ -327,7 +327,7 @@ router.delete("/education/:edu_id", auth, async (req, res) => {
     const profile = await Profile.findOne({ user: req.user.id });
 
     const newEdu = profile.education.filter(edu => {
-      return edu._id != req.params.edu_id;
+      return edu._id.toString() !== req.params.edu_id;
     });
     profile.education = newEdu;
 
