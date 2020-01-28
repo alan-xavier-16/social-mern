@@ -20,3 +20,7 @@ export const getCurrentProfile = () => async dispatch => {
     });
   }
 };
+
+export const clearProfile = () => dispatch => {
+  dispatch({ type: ProfileActionTypes.CLEAR_PROFILE });
+};

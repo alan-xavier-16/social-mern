@@ -18,7 +18,18 @@ const profileReducer = (state = INITIAL_STATE, action) => {
         loading: false
       };
     case ProfileActionTypes.PROFILE_ERROR:
-      return { ...state, error: payload, loading: false };
+      return {
+        ...state,
+        error: payload,
+        loading: false
+      };
+    case ProfileActionTypes.CLEAR_PROFILE:
+      return {
+        ...state,
+        profile: null,
+        repos: [],
+        loading: false
+      };
     default:
       return state;
   }
