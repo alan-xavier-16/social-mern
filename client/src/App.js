@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
+import { connect } from "react-redux";
 
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
@@ -7,9 +8,20 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Alert from "./components/layout/Alert";
 
+import { loadUser } from "./redux/auth/auth.actions";
+import setAuthToken from "./utils/auth.utils";
+
 import "./App.css";
 
-const App = () => {
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
+
+const App = ({ loadUser }) => {
+  useEffect(() => {
+    loadUser();
+  }, []);
+
   return (
     <div className="App">
       <Navbar />
@@ -27,4 +39,8 @@ const App = () => {
   );
 };
 
-export default App;
+const mapDispatchToProps = {
+  loadUser: () => loadUser()
+};
+
+export default connect(null, mapDispatchToProps)(App);
