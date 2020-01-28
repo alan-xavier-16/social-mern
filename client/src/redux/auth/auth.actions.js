@@ -81,3 +81,8 @@ export const login = ({ email, password }) => async dispatch => {
     dispatch({ type: AuthActionTypes.LOGIN_FAIL });
   }
 };
+
+// Logout User and clear Profile
+export const logout = () => dispatch => {
+  dispatch({ type: AuthActionTypes.LOGOUT });
+};
