@@ -21,6 +21,61 @@ export const getCurrentProfile = () => async dispatch => {
   }
 };
 
+// Get all profiles
+export const getProfiles = () => async dispatch => {
+  dispatch({ type: ProfileActionTypes.CLEAR_PROFILE });
+  try {
+    const res = await axios.get("/api/profile");
+
+    dispatch({
+      type: ProfileActionTypes.GET_PROFILES,
+      payload: res.data
+    });
+  } catch (error) {
+    console.log(error.response);
+    dispatch({
+      type: ProfileActionTypes.PROFILE_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};
+
+// Get profile by ID
+export const getProfileById = userId => async dispatch => {
+  try {
+    const res = await axios.get(`/api/profile/user/${userId}`);
+
+    dispatch({
+      type: ProfileActionTypes.GET_PROFILE,
+      payload: res.data
+    });
+  } catch (error) {
+    console.log(error.response);
+    dispatch({
+      type: ProfileActionTypes.PROFILE_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};
+
+// Get Github Repos
+export const getGithubRepos = username => async dispatch => {
+  try {
+    const res = await axios.get(`/api/profile/github/${username}`);
+
+    dispatch({
+      type: ProfileActionTypes.GET_REPOS,
+      payload: res.data
+    });
+  } catch (error) {
+    console.log(error.response);
+    dispatch({
+      type: ProfileActionTypes.PROFILE_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};
+
 // Clear Profile on Logout
 export const clearProfile = () => dispatch => {
   dispatch({ type: ProfileActionTypes.CLEAR_PROFILE });
