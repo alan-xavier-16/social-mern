@@ -130,3 +130,43 @@ export const addEducation = (formData, history) => async dispatch => {
     });
   }
 };
+
+// Delete an Experience
+export const deleteExperience = id => async dispatch => {
+  try {
+    const res = await axios.delete(`api/profile/experience/${id}`);
+
+    dispatch({
+      type: ProfileActionTypes.UPDATE_PROFILE,
+      payload: res.data
+    });
+
+    dispatch(setAlert("Experience removed", "success"));
+  } catch (error) {
+    console.log(error.response);
+    dispatch({
+      type: ProfileActionTypes.PROFILE_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};
+
+// Delete an Education
+export const deleteEducation = id => async dispatch => {
+  try {
+    const res = await axios.delete(`api/profile/education/${id}`);
+
+    dispatch({
+      type: ProfileActionTypes.UPDATE_PROFILE,
+      payload: res.data
+    });
+
+    dispatch(setAlert("Education removed", "success"));
+  } catch (error) {
+    console.log(error.response);
+    dispatch({
+      type: ProfileActionTypes.PROFILE_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};

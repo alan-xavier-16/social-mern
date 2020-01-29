@@ -88,3 +88,26 @@ export const logout = () => dispatch => {
   dispatch({ type: ProfileActionTypes.CLEAR_PROFILE });
   dispatch({ type: AuthActionTypes.LOGOUT });
 };
+
+// Delete Account and Profile
+export const deleteAccount = () => async dispatch => {
+  if (window.confirm("Are you sure? This is permanent.")) {
+    try {
+      const res = await axios.delete("/api/profil");
+
+      dispatch({ type: ProfileActionTypes.CLEAR_PROFILE });
+      dispatch({ type: AuthActionTypes.ACCOUNT_DELETED });
+
+      dispatch(setAlert("Your account has been permanently deleted"));
+    } catch (error) {
+      console.log(error.response);
+      dispatch({
+        type: ProfileActionTypes.PROFILE_ERROR,
+        payload: {
+          msg: error.response.statusText,
+          status: error.response.status
+        }
+      });
+    }
+  }
+};
