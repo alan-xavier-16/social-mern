@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 
-const Education = ({ education }) => {
+import { deleteEducation } from "../../redux/profile/profile.actions";
+
+const Education = ({ education, deleteEducation }) => {
   const educations = education.map(edu => (
     <tr key={edu._id}>
       <td>{edu.school}</td>
-      <td class="hide-sm">{edu.degree}</td>
-      <td class="hide-sm">
+      <td className="hide-sm">{edu.degree}</td>
+      <td className="hide-sm">
         <Moment format="YYYY/MM/DD">{edu.from}</Moment> -{" "}
         {edu.current ? (
           "current"
@@ -17,7 +19,12 @@ const Education = ({ education }) => {
         )}
       </td>
       <td>
-        <button class="btn btn-danger">Delete</button>
+        <button
+          className="btn btn-danger"
+          onClick={() => deleteEducation(edu._id)}
+        >
+          Delete
+        </button>
       </td>
     </tr>
   ));
@@ -29,8 +36,8 @@ const Education = ({ education }) => {
         <thead>
           <tr>
             <th>School</th>
-            <th class="hide-sm">Degree</th>
-            <th class="hide-sm">Years</th>
+            <th className="hide-sm">Degree</th>
+            <th className="hide-sm">Years</th>
             <th></th>
           </tr>
         </thead>
@@ -42,7 +49,12 @@ const Education = ({ education }) => {
 };
 
 Education.propTypes = {
-  education: PropTypes.array.isRequired
+  education: PropTypes.array.isRequired,
+  deleteEducation: PropTypes.func.isRequired
 };
 
-export default Education;
+const mapDispatchToProps = {
+  deleteEducation: id => deleteEducation(id)
+};
+
+export default connect(null, mapDispatchToProps)(Education);

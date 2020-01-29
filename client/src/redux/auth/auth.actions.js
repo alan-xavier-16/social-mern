@@ -93,7 +93,7 @@ export const logout = () => dispatch => {
 export const deleteAccount = () => async dispatch => {
   if (window.confirm("Are you sure? This is permanent.")) {
     try {
-      const res = await axios.delete("/api/profil");
+      const res = await axios.delete("/api/profile");
 
       dispatch({ type: ProfileActionTypes.CLEAR_PROFILE });
       dispatch({ type: AuthActionTypes.ACCOUNT_DELETED });
