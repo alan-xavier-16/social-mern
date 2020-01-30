@@ -19,6 +19,7 @@ export const loadUser = () => async dispatch => {
     });
   } catch (error) {
     console.log(error.response.data);
+    dispatch({ type: ProfileActionTypes.CLEAR_PROFILE });
     dispatch({ type: AuthActionTypes.AUTH_ERROR });
   }
 };
