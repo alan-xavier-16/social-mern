@@ -8,7 +8,9 @@ import ProfileItem from "./ProfileItem";
 import { getProfiles } from "../../redux/profile/profile.actions";
 
 const Profiles = ({ profile: { loading, profiles }, getProfiles }) => {
-  useEffect(() => getProfiles(), [getProfiles]);
+  useEffect(() => {
+    getProfiles();
+  }, [getProfiles]);
   return (
     <Fragment>
       {loading ? (

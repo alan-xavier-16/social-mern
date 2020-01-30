@@ -15,42 +15,26 @@ const EditProfile = ({
   history
 }) => {
   const [formData, setFormData] = useState({
-    handle: "",
-    company: "",
-    website: "",
-    location: "",
-    status: "",
-    skills: "",
-    bio: "",
-    githubusername: "",
-    youtube: "",
-    twitter: "",
-    facebook: "",
-    linkedin: "",
-    instagram: ""
+    company: loading || !profile.company ? "" : profile.company,
+    website: loading || !profile.website ? "" : profile.website,
+    location: loading || !profile.location ? "" : profile.location,
+    status: loading || !profile.status ? "" : profile.status,
+    skills: loading || !profile.skills ? "" : profile.skills,
+    bio: loading || !profile.bio ? "" : profile.bio,
+    githubusername:
+      loading || !profile.githubusername ? "" : profile.githubusername,
+    youtube: loading || !profile.social ? "" : profile.social.youtube,
+    twitter: loading || !profile.social ? "" : profile.social.twitter,
+    facebook: loading || !profile.social ? "" : profile.social.facebook,
+    linkedin: loading || !profile.social ? "" : profile.social.linkedin,
+    instagram: loading || !profile.social ? "" : profile.social.instagram
   });
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
   useEffect(() => {
     getCurrentProfile();
-
-    setFormData({
-      company: loading || !profile.company ? "" : profile.company,
-      website: loading || !profile.website ? "" : profile.website,
-      location: loading || !profile.location ? "" : profile.location,
-      status: loading || !profile.status ? "" : profile.status,
-      skills: loading || !profile.skills ? "" : profile.skills,
-      bio: loading || !profile.bio ? "" : profile.bio,
-      githubusername:
-        loading || !profile.githubusername ? "" : profile.githubusername,
-      youtube: loading || !profile.social ? "" : profile.social.youtube,
-      twitter: loading || !profile.social ? "" : profile.social.twitter,
-      facebook: loading || !profile.social ? "" : profile.social.facebook,
-      linkedin: loading || !profile.social ? "" : profile.social.linkedin,
-      instagram: loading || !profile.social ? "" : profile.social.instagram
-    });
-  }, [loading, getCurrentProfile]);
+  }, [getCurrentProfile]);
 
   const {
     company,

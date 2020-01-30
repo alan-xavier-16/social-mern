@@ -14,6 +14,7 @@ import EditProfile from "./components/profile-form/EditProfile";
 import AddExperience from "./components/profile-form/AddExperience";
 import AddEducation from "./components/profile-form/AddEducation";
 import Profiles from "./components/profiles/Profiles";
+import Profile from "./components/profile/Profile";
 
 import { loadUser } from "./redux/auth/auth.actions";
 import setAuthToken from "./utils/auth.utils";
@@ -41,6 +42,8 @@ const App = ({ loadUser }) => {
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/profiles" component={Profiles} />
+          <Route exact path="/profile/:user_id" component={Profile} />
+
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PrivateRoute
             exact
