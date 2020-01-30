@@ -103,7 +103,7 @@ const AddEducation = ({ addEducation, history }) => {
           <input
             type="date"
             name="to"
-            value={school}
+            value={to}
             onChange={handleChange}
             disabled={current}
           />

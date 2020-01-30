@@ -27,7 +27,7 @@ if (localStorage.token) {
 const App = ({ loadUser }) => {
   useEffect(() => {
     loadUser();
-  }, []);
+  }, [loadUser]);
 
   return (
     <div className="App">
