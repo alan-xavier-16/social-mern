@@ -22,6 +22,14 @@ const postReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: payload
       };
+    case PostActionTypes.UPDATE_LIKES:
+      return {
+        ...state,
+        posts: state.posts.map(post =>
+          post._id === payload.postId ? { ...post, like: payload.likes } : post
+        ),
+        loading: false
+      };
     default:
       return state;
   }

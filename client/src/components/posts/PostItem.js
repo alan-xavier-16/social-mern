@@ -4,9 +4,13 @@ import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import PropTypes from "prop-types";
 
+import { addLike, removeLike } from "../../redux/posts/post.actions";
+
 const PostItem = ({
   auth,
-  post: { _id, text, name, avatar, user, like, comments, date }
+  post: { _id, text, name, avatar, user, like, comments, date },
+  addLike,
+  removeLike
 }) => {
   return (
     <div className="post bg-white p-1 my-1">
@@ -23,12 +27,20 @@ const PostItem = ({
           Posted on <Moment format="YYYY/MM/DD">{date}</Moment>
         </p>
 
-        <button type="button" className="btn btn-light">
+        <button
+          type="button"
+          className="btn btn-light"
+          onClick={() => addLike(_id)}
+        >
           <i className="fas fa-thumbs-up"></i>{" "}
           {like.length > 0 && <span> {like.length}</span>}
         </button>
 
-        <button type="button" className="btn btn-light">
+        <button
+          type="button"
+          className="btn btn-light"
+          onClick={() => removeLike(_id)}
+        >
           <i className="fas fa-thumbs-down"></i>
         </button>
 
@@ -51,13 +63,18 @@ const PostItem = ({
 
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  addLike: PropTypes.func.isRequired,
+  removeLike: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  addLike: postId => addLike(postId),
+  removeLike: postId => removeLike(postId)
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostItem);
