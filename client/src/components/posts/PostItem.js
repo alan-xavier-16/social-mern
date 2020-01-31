@@ -4,13 +4,18 @@ import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import PropTypes from "prop-types";
 
-import { addLike, removeLike } from "../../redux/posts/post.actions";
+import {
+  addLike,
+  removeLike,
+  deletePost
+} from "../../redux/posts/post.actions";
 
 const PostItem = ({
   auth,
   post: { _id, text, name, avatar, user, like, comments, date },
   addLike,
-  removeLike
+  removeLike,
+  deletePost
 }) => {
   return (
     <div className="post bg-white p-1 my-1">
@@ -30,7 +35,7 @@ const PostItem = ({
         <button
           type="button"
           className="btn btn-light"
-          onClick={() => addLike(_id)}
+          onClick={e => addLike(_id)}
         >
           <i className="fas fa-thumbs-up"></i>{" "}
           {like.length > 0 && <span> {like.length}</span>}
@@ -39,7 +44,7 @@ const PostItem = ({
         <button
           type="button"
           className="btn btn-light"
-          onClick={() => removeLike(_id)}
+          onClick={e => removeLike(_id)}
         >
           <i className="fas fa-thumbs-down"></i>
         </button>
@@ -52,7 +57,11 @@ const PostItem = ({
         </Link>
 
         {!auth.loading && user === auth.user._id && (
-          <button type="button" className="btn btn-danger">
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={e => deletePost(_id)}
+          >
             <i className="fas fa-times"></i>
           </button>
         )}
@@ -65,7 +74,8 @@ PostItem.propTypes = {
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   addLike: PropTypes.func.isRequired,
-  removeLike: PropTypes.func.isRequired
+  removeLike: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -74,7 +84,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   addLike: postId => addLike(postId),
-  removeLike: postId => removeLike(postId)
+  removeLike: postId => removeLike(postId),
+  deletePost: postId => deletePost(postId)
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostItem);

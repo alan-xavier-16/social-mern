@@ -56,3 +56,23 @@ export const removeLike = postId => async dispatch => {
     });
   }
 };
+
+// Delete post
+export const deletePost = postId => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/posts/${postId}`);
+
+    dispatch({
+      type: PostActionTypes.DELETE_POST,
+      payload: postId
+    });
+
+    dispatch(setAlert("Post Removed", "success"));
+  } catch (error) {
+    console.log(error.response);
+    dispatch({
+      type: PostActionTypes.POST_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};

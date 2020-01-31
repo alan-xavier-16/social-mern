@@ -22,6 +22,12 @@ const postReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: payload
       };
+    case PostActionTypes.DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter(post => post._id !== payload),
+        loading: false
+      };
     case PostActionTypes.UPDATE_LIKES:
       return {
         ...state,
