@@ -109,3 +109,21 @@ export const addPost = formData => async dispatch => {
     });
   }
 };
+
+// Get a post
+export const getPost = postId => async dispatch => {
+  try {
+    const res = await axios.get(`/api/posts/${postId}`);
+
+    dispatch({
+      type: PostActionTypes.GET_POST,
+      payload: res.data
+    });
+  } catch (error) {
+    console.log(error.response);
+    dispatch({
+      type: PostActionTypes.POST_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};

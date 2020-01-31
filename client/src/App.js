@@ -16,6 +16,7 @@ import AddEducation from "./components/profile-form/AddEducation";
 import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
 import Posts from "./components/posts/Posts";
+import Post from "./components/post/Post";
 
 import { loadUser } from "./redux/auth/auth.actions";
 import setAuthToken from "./utils/auth.utils";
@@ -59,6 +60,7 @@ const App = ({ loadUser }) => {
           />
           <PrivateRoute exact path="/add-education" component={AddEducation} />
           <PrivateRoute exact path="/posts" component={Posts} />
+          <PrivateRoute exact path="/post/:post_id" component={Post} />
         </Switch>
       </section>
     </div>
