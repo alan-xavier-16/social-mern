@@ -4,7 +4,9 @@ const PostActionTypes = {
   ADD_POST: "ADD_POST",
   GET_POST: "GET_POST",
   POST_ERROR: "POST_ERROR",
-  UPDATE_LIKES: "UPDATE_LIKES"
+  UPDATE_LIKES: "UPDATE_LIKES",
+  ADD_COMMENT: "ADD_COMMENT",
+  REMOVE_COMMENT: "REMOVE_COMMENT"
 };
 
 export default PostActionTypes;
