@@ -76,3 +76,36 @@ export const deletePost = postId => async dispatch => {
     });
   }
 };
+
+// Add post
+export const addPost = formData => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    const res = await axios.post(`/api/posts`, formData, config);
+
+    dispatch({
+      type: PostActionTypes.ADD_POST,
+      payload: res.data
+    });
+
+    dispatch(setAlert("Post Created", "success"));
+  } catch (error) {
+    console.log(error.response);
+
+    const errors = error.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
+    }
+
+    dispatch({
+      type: PostActionTypes.POST_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+};

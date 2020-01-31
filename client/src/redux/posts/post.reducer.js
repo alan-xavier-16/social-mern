@@ -16,6 +16,12 @@ const postReducer = (state = INITIAL_STATE, action) => {
         posts: payload,
         loading: false
       };
+    case PostActionTypes.ADD_POST:
+      return {
+        ...state,
+        posts: [...state.posts, payload],
+        loading: false
+      };
     case PostActionTypes.POST_ERROR:
       return {
         ...state,
