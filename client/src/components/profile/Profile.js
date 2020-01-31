@@ -8,6 +8,8 @@ import ProfileTop from "./ProfileTop";
 import ProfileAbout from "./ProfileAbout";
 
 import { getProfileById } from "../../redux/profile/profile.actions";
+import ProfileExperience from "./ProfileExperience";
+import ProfileEducation from "./ProfileEducation";
 
 const Profile = ({
   getProfileById,
@@ -40,6 +42,8 @@ const Profile = ({
           <div className="profile-grid my-1">
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
+            <ProfileExperience profile={profile} />
+            <ProfileEducation profile={profile} />
           </div>
         </Fragment>
       )}
