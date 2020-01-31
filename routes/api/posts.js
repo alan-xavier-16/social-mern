@@ -231,7 +231,7 @@ router.put(
 
       post.comments.unshift(newComment);
       await post.save();
-      res.json(post);
+      res.json(post.comments);
     } catch (error) {
       console.error(error.message);
       if (error.kind === "ObjectId") {
