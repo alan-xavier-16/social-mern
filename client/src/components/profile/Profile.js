@@ -10,6 +10,7 @@ import ProfileAbout from "./ProfileAbout";
 import { getProfileById } from "../../redux/profile/profile.actions";
 import ProfileExperience from "./ProfileExperience";
 import ProfileEducation from "./ProfileEducation";
+import ProfileGithub from "./ProfileGithub";
 
 const Profile = ({
   getProfileById,
@@ -44,6 +45,7 @@ const Profile = ({
             <ProfileAbout profile={profile} />
             <ProfileExperience profile={profile} />
             <ProfileEducation profile={profile} />
+            <ProfileGithub username={profile.githubusername} />
           </div>
         </Fragment>
       )}
